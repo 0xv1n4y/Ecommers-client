@@ -2,6 +2,7 @@ import "./globals.css";
 import { ThemeProvider } from "../components/theam/theam-provider";
 import { Inter } from "next/font/google";
 import { Header } from "../components/header/index"; 
+import { ReduxProvider } from "../store/redux-provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });  //Fonts import from google fonts
 
@@ -14,10 +15,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.variable} > {/* Applying font globally */}
+        <ReduxProvider>
         <ThemeProvider>
           <Header/>
             <main>{children}</main>
         </ThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
