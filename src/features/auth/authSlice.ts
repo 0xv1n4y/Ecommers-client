@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 interface AuthState {
-  user: any
-  token: string | null
+  user: any | null
   isAuthenticated: boolean
   loading: boolean
   error: string | null
@@ -10,7 +9,6 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  token: null,
   isAuthenticated: false,
   loading: false,
   error: null,
@@ -27,7 +25,6 @@ const authSlice = createSlice({
     authSuccess(state, action) {
       state.loading = false
       state.user = action.payload.user
-      state.token = action.payload.token
       state.isAuthenticated = true
     },
     authFailure(state, action) {
@@ -36,7 +33,7 @@ const authSlice = createSlice({
     },
     logout(state) {
       state.user = null
-      state.token = null
+
       state.isAuthenticated = false
     },
   },

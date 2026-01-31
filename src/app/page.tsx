@@ -8,11 +8,6 @@ export default function Home() {
         <h1 className="text-3xl font-bold font-sans">
           E-commerce Design System ✅
         </h1>
-        <LoginForm/>
-
-        <button className="bg-primary text-primary-foreground px-4 py-2 rounded">
-          Add to Cart
-        </button>
       </div>
     </div>
  )

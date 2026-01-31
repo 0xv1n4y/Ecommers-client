@@ -5,12 +5,14 @@ import { apiRequest } from "../../components/lib/api";
 export const loginUser = (email:string, password:string) => async (dispatch:any) => {
     try{
         dispatch(authStart());
-        const response = await apiRequest("/auth/login", {
-            method: "POST",
-            body: JSON.stringify({ email, password }),
-        });
-        dispatch(authSuccess(response));
-         localStorage.setItem("token", response.token)
+        // backend sets HttpOnly cookie here
+        await apiRequest("/auth/login", {
+          method: "POST",
+          body: JSON.stringify({ email, password }),
+        })
+        // fetch user after cookie is set
+         const user = await apiRequest("/auth/me")
+        dispatch(authSuccess(user));
     }catch (error:any){
         dispatch(authFailure(error.message));
     }   
@@ -21,7 +23,7 @@ export const signupUser =
     try {
       dispatch(authStart())
 
-      await apiRequest("/auth/signup", {
+     await apiRequest("/auth/signup", {
         method: "POST",
         body: JSON.stringify(payload),
       })
@@ -31,3 +33,13 @@ export const signupUser =
       dispatch(authFailure(err.message))
     }
   }
+
+export const loadUser = () => async(dispatch:any) => {
+  try{
+    dispatch(authStart());
+    const user = await apiRequest("/auth/me");
+    dispatch(authSuccess(user));  
+  } catch {
+  
+  }
+};
